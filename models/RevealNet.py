@@ -81,6 +81,7 @@ class RevealNet(nn.Module):
 #         output=self.main(input)
 #         return output
 
+# 15W
 class RevealNet_15w(nn.Module):
     def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
         super(RevealNet, self).__init__()
