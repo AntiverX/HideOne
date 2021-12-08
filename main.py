@@ -393,15 +393,18 @@ def validation(val_loader, epoch, Hnet, Rnet, criterion):
             secret_img = secret_img.cuda()
             concat_img = concat_img.cuda()
 
-        concat_imgv = Variable(concat_img, volatile=True)
-        cover_imgv = Variable(cover_img, volatile=True)
+        with torch.no_grad():
+            concat_imgv = Variable(concat_img)
+            cover_imgv = Variable(cover_img)
 
         container_img = Hnet(concat_imgv)
         errH = criterion(container_img, cover_imgv)
         Hlosses.update(errH.data, this_batch_size)
 
         rev_secret_img = Rnet(container_img)
-        secret_imgv = Variable(secret_img, volatile=True)
+
+        with torch.no_grad():
+            secret_imgv = Variable(secret_img)
         errR = criterion(rev_secret_img, secret_imgv)  # loss between secret image and revealed secret image
         Rlosses.update(errR.data * 1.6, this_batch_size)
 
