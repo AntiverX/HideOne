@@ -26,8 +26,11 @@ from models.RevealNet import RevealNet
 
 loss_fn_alex = lpips.LPIPS(net='alex')
 
+BACKDOOR = 1
+CLEAN = 0.5
 
-
+# BACKDOOR = 1.6 CLEAN = 0.4的时候，训练后期会过拟合，CLEAN没法看
+# 0.5 0.5 无法恢复secret
 DATA_DIR = '/root/dataset_50000'
 
 parser = argparse.ArgumentParser()
@@ -322,7 +325,7 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         # secret_imgv_ = torch.cat((secret_imgv_as_clean_input, secret_imgv), 0)
         # rev_secret_img_ = torch.cat((clean_recovered_imgv, rev_secret_img, ), 0)
 
-        betaerrR_secret = opt.beta * errR * 1.6 + opt.beta * errR_clean * 0.4
+        betaerrR_secret = opt.beta * errR * BACKDOOR + opt.beta * errR_clean * CLEAN
         err_sum = errH + betaerrR_secret
         SumLosses.update(err_sum.data, this_batch_size)
 
@@ -406,13 +409,13 @@ def validation(val_loader, epoch, Hnet, Rnet, criterion):
         with torch.no_grad():
             secret_imgv = Variable(secret_img)
         errR = criterion(rev_secret_img, secret_imgv)  # loss between secret image and revealed secret image
-        Rlosses.update(errR.data * 1.6, this_batch_size)
+        Rlosses.update(errR.data * BACKDOOR, this_batch_size)
 
         # secret image as clean input
         secret_imgv_as_clean_input = copy.deepcopy(secret_imgv)
         clean_recovered_imgv = Rnet(secret_imgv_as_clean_input)
         errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input)
-        Rlosses.update(errR_clean.data * 0.4, this_batch_size)
+        Rlosses.update(errR_clean.data * CLEAN, this_batch_size)
 
 
         if i % 50 == 0:
