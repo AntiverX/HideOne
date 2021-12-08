@@ -33,7 +33,7 @@ DATA_DIR = '/root/dataset_50000'
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default="train", help='train | val | test')
 parser.add_argument('--workers', type=int, default=8, help='number of data loading workers')
-parser.add_argument('--batchSize', type=int, default=64, help='input batch size')
+parser.add_argument('--batchSize', type=int, default=48, help='input batch size')
 parser.add_argument('--imageSize', type=int, default=256, help='the number of frames')
 parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
 parser.add_argument('--lr', type=float, default=0.001,
