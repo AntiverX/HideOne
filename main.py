@@ -322,7 +322,7 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         # secret_imgv_ = torch.cat((secret_imgv_as_clean_input, secret_imgv), 0)
         # rev_secret_img_ = torch.cat((clean_recovered_imgv, rev_secret_img, ), 0)
 
-        betaerrR_secret = opt.beta * errR * 0.3 + opt.beta * errR_clean * 0.3
+        betaerrR_secret = opt.beta * errR * 0.1 + opt.beta * errR_clean * 0.4
         err_sum = errH + betaerrR_secret
         SumLosses.update(err_sum.data, this_batch_size)
 
