@@ -200,7 +200,7 @@ def main():
             ]))
         assert test_dataset
 
-    Hnet = UnetGenerator(input_nc=6, output_nc=3, num_downs=5, output_function=nn.Sigmoid)
+    Hnet = UnetGenerator(input_nc=6, output_nc=3, num_downs=3, output_function=nn.Sigmoid)
 
     Hnet.cuda()
     Hnet.apply(weights_init)
