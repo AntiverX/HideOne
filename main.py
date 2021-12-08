@@ -322,7 +322,7 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         # secret_imgv_ = torch.cat((secret_imgv_as_clean_input, secret_imgv), 0)
         # rev_secret_img_ = torch.cat((clean_recovered_imgv, rev_secret_img, ), 0)
 
-        betaerrR_secret = opt.beta * errR * 0.4 + opt.beta * errR_clean * 1.6
+        betaerrR_secret = opt.beta * errR * 1.6 + opt.beta * errR_clean * 0.4
         err_sum = errH + betaerrR_secret
         SumLosses.update(err_sum.data, this_batch_size)
 
@@ -403,13 +403,13 @@ def validation(val_loader, epoch, Hnet, Rnet, criterion):
         rev_secret_img = Rnet(container_img)
         secret_imgv = Variable(secret_img, volatile=True)
         errR = criterion(rev_secret_img, secret_imgv)  # loss between secret image and revealed secret image
-        Rlosses.update(errR.data, this_batch_size)
+        Rlosses.update(errR.data * 1.6, this_batch_size)
 
         # secret image as clean input
         secret_imgv_as_clean_input = copy.deepcopy(secret_imgv)
         clean_recovered_imgv = Rnet(secret_imgv_as_clean_input)
         errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input)
-        Rlosses.update(errR_clean.data, this_batch_size)
+        Rlosses.update(errR_clean.data * 0.4, this_batch_size)
 
 
         if i % 50 == 0:
