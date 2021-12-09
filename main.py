@@ -33,6 +33,8 @@ BACKDOOR = 2
 TITLE = ""
 
 DATA_DIR = '/home/lab/dataset'
+# DATA_DIR = '/root/dataset'
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default="train", help='train | val | test')

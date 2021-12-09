@@ -14,38 +14,38 @@ from torchvision import models
 from torchsummary import summary
 
 # 30w
-class RevealNet(nn.Module):
-    def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
-        super(RevealNet, self).__init__()
-        # input is (3) x 256 x 256
-        self.main = nn.Sequential(
-            nn.Conv2d(nc, nhf, 3, 1, 1),
-            nn.BatchNorm2d(nhf),
-            nn.ReLU(True),
-
-            nn.Conv2d(nhf, nhf * 2, 3, 1, 1),
-            nn.BatchNorm2d(nhf*2),
-            nn.ReLU(True),
-
-            # nn.Conv2d(nhf * 2, nhf * 4, 3, 1, 1),
-            # nn.BatchNorm2d(nhf*4),
-            # nn.ReLU(True),
-
-            nn.Conv2d(nhf * 2, nhf * 2, 3, 1, 1),
-            nn.BatchNorm2d(nhf*2),
-            nn.ReLU(True),
-
-            nn.Conv2d(nhf * 2, nhf, 3, 1, 1),
-            nn.BatchNorm2d(nhf),
-            nn.ReLU(True),
-
-            nn.Conv2d(nhf, nc, 3, 1, 1),
-            output_function()
-        )
-
-    def forward(self, input):
-        output=self.main(input)
-        return output
+# class RevealNet(nn.Module):
+#     def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
+#         super(RevealNet, self).__init__()
+#         # input is (3) x 256 x 256
+#         self.main = nn.Sequential(
+#             nn.Conv2d(nc, nhf, 3, 1, 1),
+#             nn.BatchNorm2d(nhf),
+#             nn.ReLU(True),
+#
+#             nn.Conv2d(nhf, nhf * 2, 3, 1, 1),
+#             nn.BatchNorm2d(nhf*2),
+#             nn.ReLU(True),
+#
+#             # nn.Conv2d(nhf * 2, nhf * 4, 3, 1, 1),
+#             # nn.BatchNorm2d(nhf*4),
+#             # nn.ReLU(True),
+#
+#             nn.Conv2d(nhf * 2, nhf * 2, 3, 1, 1),
+#             nn.BatchNorm2d(nhf*2),
+#             nn.ReLU(True),
+#
+#             nn.Conv2d(nhf * 2, nhf, 3, 1, 1),
+#             nn.BatchNorm2d(nhf),
+#             nn.ReLU(True),
+#
+#             nn.Conv2d(nhf, nc, 3, 1, 1),
+#             output_function()
+#         )
+#
+#     def forward(self, input):
+#         output=self.main(input)
+#         return output
 
 # 8w
 # class RevealNet(nn.Module):
@@ -82,7 +82,7 @@ class RevealNet(nn.Module):
 #         return output
 
 # 15W
-class RevealNet_15w(nn.Module):
+class RevealNet(nn.Module):
     def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
         super(RevealNet, self).__init__()
         # input is (3) x 256 x 256
