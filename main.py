@@ -26,8 +26,8 @@ from models.RevealNet import RevealNet
 
 loss_fn_alex = lpips.LPIPS(net='alex')
 
-BACKDOOR = 0.75
-CLEAN = 0.5
+BACKDOOR = 0.6
+CLEAN = 0.3
 
 # BACKDOOR = 1.6 CLEAN = 0.4的时候，训练后期会过拟合，CLEAN没法看
 # 0.5 0.5 无法恢复secret
