@@ -32,7 +32,7 @@ BACKDOOR = 2
 
 TITLE = ""
 
-DATA_DIR = '/root/dataset_50000'
+DATA_DIR = '/root/dataset'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default="train", help='train | val | test')
