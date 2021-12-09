@@ -5,9 +5,9 @@ import os
 from sklearn.model_selection import ShuffleSplit
 import numpy as np
 
-PATH = "/root/ILSVRC2012_img_val_50000"
-VAL = "/root/dataset/val"
-TRAIN = "/root/dataset/train"
+PATH = "/home/lab/ILSVRC2012_img_val_50000"
+VAL = "/home/lab/dataset/val"
+TRAIN = "/home/lab/dataset/train"
 
 onlyfiles = [os.path.join(PATH, f) for f in listdir(PATH) if isfile(join(PATH, f))]
 data = np.array(onlyfiles)

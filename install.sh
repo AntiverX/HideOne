@@ -4,7 +4,6 @@ gdown 'https://drive.google.com/uc?id=1-Qlf1DSAIDnXV1sXy-_Jjudk4l9ThrjU'
 
 mkdir /root/dataset /root/dataset/train /root/dataset/val
 tar -xvf ILSVRC2012_img_val_50000.tar -C ILSVRC2012_img_val_50000
-unrar e collections.rar /root/dataset_50000/train
 
 apt install git screen unrar -y
 git clone https://github.com/AntiverX/HideOne.git
