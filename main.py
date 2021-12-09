@@ -311,13 +311,15 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         # RNET
         rev_secret_img = Rnet(container_img)  # put concatenated image into R-net and get revealed secret image
         secret_imgv = Variable(secret_img)
-        errR = criterion(rev_secret_img, secret_imgv) + torch.nn.L1Loss().cuda()(rev_secret_img, secret_imgv) * 0.1
+        errR = criterion(rev_secret_img, secret_imgv)\
+               # + torch.nn.L1Loss().cuda()(rev_secret_img, secret_imgv) * 0.1
         Rlosses.update(errR.data, this_batch_size)
 
         # secret image as clean input
         secret_imgv_as_clean_input = copy.deepcopy(secret_imgv)
         clean_recovered_imgv = Rnet(secret_imgv_as_clean_input)
-        errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input) + torch.nn.L1Loss().cuda()(clean_recovered_imgv, secret_imgv_as_clean_input) * 0.1
+        errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input)
+        # + torch.nn.L1Loss().cuda()(clean_recovered_imgv, secret_imgv_as_clean_input) * 0.1
         Rlosses.update(errR_clean.data, this_batch_size)
 
         # secret_imgv_ = torch.cat((secret_imgv_as_clean_input, secret_imgv), 0)
