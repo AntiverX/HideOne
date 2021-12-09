@@ -173,12 +173,14 @@ def main():
             transforms.Compose([
                 transforms.Resize([opt.imageSize, opt.imageSize]),  # resize to a given size
                 transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ]))
         val_dataset = MyImageFolder(
             valdir,
             transforms.Compose([
                 transforms.Resize([opt.imageSize, opt.imageSize]),
                 transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ]))
         assert train_dataset
         assert val_dataset
