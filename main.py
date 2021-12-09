@@ -26,8 +26,8 @@ from models.RevealNet import RevealNet
 
 loss_fn_alex = lpips.LPIPS(net='alex')
 
-CLEAN = 1
-BACKDOOR = 2
+CLEAN = 0.3
+BACKDOOR = 0.6
 
 
 TITLE = ""
@@ -311,7 +311,7 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         # RNET
         rev_secret_img = Rnet(container_img)  # put concatenated image into R-net and get revealed secret image
         secret_imgv = Variable(secret_img)
-        errR = criterion(rev_secret_img, secret_imgv)\
+        errR = criterion(rev_secret_img, secret_imgv)
                # + torch.nn.L1Loss().cuda()(rev_secret_img, secret_imgv) * 0.1
         Rlosses.update(errR.data, this_batch_size)
 
