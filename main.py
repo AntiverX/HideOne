@@ -42,7 +42,7 @@ parser.add_argument('--workers', type=int, default=8, help='number of data loadi
 parser.add_argument('--batchSize', type=int, default=48, help='input batch size')
 parser.add_argument('--imageSize', type=int, default=256, help='the number of frames')
 parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
-parser.add_argument('--lr', type=float, default=0.0001, help='learning rate, default=0.001')
+parser.add_argument('--lr', type=float, default=0.0005, help='learning rate, default=0.001')
 parser.add_argument('--decay_round', type=int, default=10, help='learning rate decay 0.5 each decay_round')
 parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
 parser.add_argument('--cuda', type=bool, default=True, help='enables cuda')
