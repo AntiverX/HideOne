@@ -342,7 +342,7 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
 
         # genereate a picture every resultPicFrequency steps
         if epoch % 1 == 0 and i % opt.resultPicFrequency == 0:
-            save_result_pic('train', 5, clean_recovered_imgv.data[5], cover_img[5], container_img.data[5], secret_img[5], rev_secret_img.data[5], epoch, i, opt.trainpics)
+            save_result_pic('train', 5, clean_recovered_imgv.data[1], cover_img[1], container_img.data[1], secret_img[1], rev_secret_img.data[1], epoch, i, opt.trainpics)
 
     # epcoh log
     epoch_log = "one epoch time is %.4f======================================================================" % (
@@ -413,7 +413,7 @@ def validation(val_loader, epoch, Hnet, Rnet, criterion):
 
 
         if i % 50 == 0:
-            save_result_pic('validate', 5, clean_recovered_imgv.data[5], cover_img[5], container_img.data[5], secret_img[5], rev_secret_img.data[5], epoch, i, opt.validationpics)
+            save_result_pic('validate', 5, clean_recovered_imgv.data[1], cover_img[1], container_img.data[1], secret_img[1], rev_secret_img.data[1], epoch, i, opt.validationpics)
 
     val_hloss = Hlosses.avg
     val_rloss = Rlosses.avg
