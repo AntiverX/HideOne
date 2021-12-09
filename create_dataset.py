@@ -11,8 +11,7 @@ TRAIN = "/root/dataset/train"
 
 onlyfiles = [os.path.join(PATH, f) for f in listdir(PATH) if isfile(join(PATH, f))]
 data = np.array(onlyfiles)
-print(len(onlyfiles))
-exit()
+
 rs = ShuffleSplit(n_splits=1, test_size=0.1, random_state=0)
 for train_index, test_index in rs.split(data):
     train = data[train_index]
@@ -21,7 +20,7 @@ for train_index, test_index in rs.split(data):
         os.mkdir(VAL)
         os.mkdir(TRAIN)
     except:
-        exit(255)
+        print("cannot mkdir.")
     for file in train:
         move(file, os.path.join(TRAIN, os.path.split(file)[1]))
     for file in val:
