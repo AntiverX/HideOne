@@ -5,9 +5,10 @@ import os
 from sklearn.model_selection import ShuffleSplit
 import numpy as np
 
-PATH = "D:\ILSVRC2012_img_val_50000"
-VAL = "D:\VAL"
-TRAIN = "D:\TRAIN"
+PATH = "/root/ILSVRC2012_img_val_50000"
+VAL = "/root/dataset/val"
+TRAIN = "/root/dataset/train"
+
 onlyfiles = [os.path.join(PATH, f) for f in listdir(PATH) if isfile(join(PATH, f))]
 data = np.array(onlyfiles)
 
@@ -16,8 +17,8 @@ for train_index, test_index in rs.split(data):
     train = data[train_index]
     val = data[test_index]
     try:
-        os.mkdir("D:\VAL")
-        os.mkdir("D:\TRAIN")
+        os.mkdir(VAL)
+        os.mkdir(TRAIN)
     except:
         exit(255)
     for file in train:
