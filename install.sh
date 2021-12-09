@@ -20,5 +20,5 @@ chmod +x gdrive
 
 
 
-# tar -zcvf archive-name.tar.gz
-# gdrive upload archive-name.tar.gz
+# tar -zcvf valset.tar.gz /root/dataset_50000/val
+# ./gdrive upload valset.tar.gz

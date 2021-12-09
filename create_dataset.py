@@ -2,23 +2,25 @@ from os import listdir
 from os.path import isfile, join
 from shutil import move
 import os
+from sklearn.model_selection import ShuffleSplit
+import numpy as np
 
-onlyfiles = [f for f in listdir("/root/dataset_50000") if isfile(join("/root/dataset_50000", f))]
-val = []
-train = []
-for i in range(len(onlyfiles)):
-    if i < 5000:
-        val.append(join("/root/dataset_50000", onlyfiles[i]))
-    else:
-        train.append(join("/root/dataset_50000", onlyfiles[i]))
+PATH = "D:\ILSVRC2012_img_val_50000"
+VAL = "D:\VAL"
+TRAIN = "D:\TRAIN"
+onlyfiles = [os.path.join(PATH, f) for f in listdir(PATH) if isfile(join(PATH, f))]
+data = np.array(onlyfiles)
 
-try:
-    os.mkdir("/root/dataset_50000/val")
-    os.mkdir("/root/dataset_50000/train")
-except:
-    pass
-
-for file in train:
-    move(file, os.path.join("/root/dataset_50000/train", os.path.split(file)[1]))
-for file in val:
-    move(file, os.path.join("/root/dataset_50000/val", os.path.split(file)[1]))
+rs = ShuffleSplit(n_splits=1, test_size=0.1, random_state=0)
+for train_index, test_index in rs.split(data):
+    train = data[train_index]
+    val = data[test_index]
+    try:
+        os.mkdir("D:\VAL")
+        os.mkdir("D:\TRAIN")
+    except:
+        exit(255)
+    for file in train:
+        move(file, os.path.join(TRAIN, os.path.split(file)[1]))
+    for file in val:
+        move(file, os.path.join(VAL, os.path.split(file)[1]))

@@ -3,3 +3,4 @@ tensorboardX
 argparse
 lpips
 torchsummary
+sklearn
