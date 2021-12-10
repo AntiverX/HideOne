@@ -42,7 +42,7 @@ parser.add_argument('--workers', type=int, default=8, help='number of data loadi
 parser.add_argument('--batchSize', type=int, default=48, help='input batch size')
 parser.add_argument('--imageSize', type=int, default=256, help='the number of frames')
 parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
-parser.add_argument('--lr', type=float, default=0.0005, help='learning rate, default=0.001')
+parser.add_argument('--lr', type=float, default=0.001, help='learning rate, default=0.001')
 parser.add_argument('--decay_round', type=int, default=10, help='learning rate decay 0.5 each decay_round')
 parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
 parser.add_argument('--cuda', type=bool, default=True, help='enables cuda')
@@ -87,7 +87,7 @@ def print_network(net):
     num_params = 0
     for param in net.parameters():
         num_params += param.numel()
-    print_log(str(net), logPath)
+    # print_log(str(net), logPath)
     print_log('Total number of parameters: %d' % num_params, logPath)
 
 
@@ -175,14 +175,14 @@ def main():
             transforms.Compose([
                 transforms.Resize([opt.imageSize, opt.imageSize]),  # resize to a given size
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ]))
         val_dataset = MyImageFolder(
             valdir,
             transforms.Compose([
                 transforms.Resize([opt.imageSize, opt.imageSize]),
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ]))
         assert train_dataset
         assert val_dataset
@@ -311,15 +311,13 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         # RNET
         rev_secret_img = Rnet(container_img)  # put concatenated image into R-net and get revealed secret image
         secret_imgv = Variable(secret_img)
-        errR = criterion(rev_secret_img, secret_imgv)
-               # + torch.nn.L1Loss().cuda()(rev_secret_img, secret_imgv) * 0.1
+        errR = criterion(rev_secret_img, secret_imgv) + torch.nn.L1Loss().cuda()(rev_secret_img, secret_imgv) * 0.1
         Rlosses.update(errR.data, this_batch_size)
 
         # secret image as clean input
         secret_imgv_as_clean_input = copy.deepcopy(secret_imgv)
         clean_recovered_imgv = Rnet(secret_imgv_as_clean_input)
-        errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input)
-        # + torch.nn.L1Loss().cuda()(clean_recovered_imgv, secret_imgv_as_clean_input) * 0.1
+        errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input) + torch.nn.L1Loss().cuda()(clean_recovered_imgv, secret_imgv_as_clean_input) * 0.1
         Rlosses.update(errR_clean.data, this_batch_size)
 
         # secret_imgv_ = torch.cat((secret_imgv_as_clean_input, secret_imgv), 0)

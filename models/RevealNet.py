@@ -13,6 +13,34 @@ import torch.nn as nn
 from torchvision import models
 from torchsummary import summary
 
+class RevealNet(nn.Module):
+    def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
+        super(RevealNet, self).__init__()
+        # input is (3) x 256 x 256
+        self.main = nn.Sequential(
+            nn.Conv2d(nc, nhf, 3, 1, 1),
+            nn.BatchNorm2d(nhf),
+            nn.ReLU(True),
+            nn.Conv2d(nhf, nhf * 2, 3, 1, 1),
+            nn.BatchNorm2d(nhf*2),
+            nn.ReLU(True),
+            nn.Conv2d(nhf * 2, nhf * 4, 3, 1, 1),
+            nn.BatchNorm2d(nhf*4),
+            nn.ReLU(True),
+            nn.Conv2d(nhf * 4, nhf * 2, 3, 1, 1),
+            nn.BatchNorm2d(nhf*2),
+            nn.ReLU(True),
+            nn.Conv2d(nhf * 2, nhf, 3, 1, 1),
+            nn.BatchNorm2d(nhf),
+            nn.ReLU(True),
+            nn.Conv2d(nhf, nc, 3, 1, 1),
+            output_function()
+        )
+
+    def forward(self, input):
+        output=self.main(input)
+        return output
+
 # 30w
 # class RevealNet(nn.Module):
 #     def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
@@ -82,38 +110,38 @@ from torchsummary import summary
 #         return output
 
 # 15W
-class RevealNet(nn.Module):
-    def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
-        super(RevealNet, self).__init__()
-        # input is (3) x 256 x 256
-        self.main = nn.Sequential(
-            nn.Conv2d(nc, nhf, 3, 1, 1),
-            nn.BatchNorm2d(nhf),
-            nn.ReLU(True),
-
-            nn.Conv2d(nhf, nhf * 2, 3, 1, 1),
-            nn.BatchNorm2d(nhf*2),
-            nn.ReLU(True),
-
-            # nn.Conv2d(nhf * 2, nhf * 4, 3, 1, 1),
-            # nn.BatchNorm2d(nhf*4),
-            # nn.ReLU(True),
-
-            # nn.Conv2d(nhf * 2, nhf * 2, 3, 1, 1),
-            # nn.BatchNorm2d(nhf*2),
-            # nn.ReLU(True),
-
-            nn.Conv2d(nhf * 2, nhf, 3, 1, 1),
-            nn.BatchNorm2d(nhf),
-            nn.ReLU(True),
-
-            nn.Conv2d(nhf, nc, 3, 1, 1),
-            output_function()
-        )
-
-    def forward(self, input):
-        output=self.main(input)
-        return output
+# class RevealNet(nn.Module):
+#     def __init__(self, nc=3, nhf=64, output_function=nn.Sigmoid):
+#         super(RevealNet, self).__init__()
+#         # input is (3) x 256 x 256
+#         self.main = nn.Sequential(
+#             nn.Conv2d(nc, nhf, 3, 1, 1),
+#             nn.BatchNorm2d(nhf),
+#             nn.ReLU(True),
+#
+#             nn.Conv2d(nhf, nhf * 2, 3, 1, 1),
+#             nn.BatchNorm2d(nhf*2),
+#             nn.ReLU(True),
+#
+#             # nn.Conv2d(nhf * 2, nhf * 4, 3, 1, 1),
+#             # nn.BatchNorm2d(nhf*4),
+#             # nn.ReLU(True),
+#
+#             # nn.Conv2d(nhf * 2, nhf * 2, 3, 1, 1),
+#             # nn.BatchNorm2d(nhf*2),
+#             # nn.ReLU(True),
+#
+#             nn.Conv2d(nhf * 2, nhf, 3, 1, 1),
+#             nn.BatchNorm2d(nhf),
+#             nn.ReLU(True),
+#
+#             nn.Conv2d(nhf, nc, 3, 1, 1),
+#             output_function()
+#         )
+#
+#     def forward(self, input):
+#         output=self.main(input)
+#         return output
 
 if __name__ == "__main__":
     model = RevealNet().cuda()
