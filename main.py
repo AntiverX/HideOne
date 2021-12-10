@@ -32,8 +32,8 @@ LR = 0.0001
 
 TITLE = ""
 
-DATA_DIR = '/home/lab/dataset'
-# DATA_DIR = '/root/dataset'
+# DATA_DIR = '/home/lab/dataset'
+DATA_DIR = '/root/dataset'
 
 
 parser = argparse.ArgumentParser()
