@@ -4,7 +4,7 @@ import os
 import shutil
 import socket
 import time
-
+import pathlib
 import torch
 import torch.backends.cudnn as cudnn
 import torch.nn as nn
@@ -32,8 +32,9 @@ LR = 0.0001
 LR_for_RNET = 0.00005
 TITLE = ""
 
-# DATA_DIR = '/home/lab/dataset'
-DATA_DIR = '/root/dataset'
+
+path = pathlib.Path(__file__).parent.resolve()
+DATA_DIR = os.path.join(os.path.split(path)[0],"dataset")
 
 
 parser = argparse.ArgumentParser()
