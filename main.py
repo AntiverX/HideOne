@@ -29,7 +29,7 @@ loss_fn_alex = lpips.LPIPS(net='alex')
 CLEAN = 1
 BACKDOOR = 2
 LR = 0.0001
-
+LR_for_RNET = 0.00005
 TITLE = ""
 
 # DATA_DIR = '/home/lab/dataset'
@@ -226,7 +226,7 @@ def main():
         optimizerH = optim.Adam(Hnet.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
         schedulerH = ReduceLROnPlateau(optimizerH, mode='min', factor=0.2, patience=5, verbose=True)
 
-        optimizerR = optim.Adam(Rnet.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
+        optimizerR = optim.Adam(Rnet.parameters(), lr=LR_for_RNET, betas=(opt.beta1, 0.999))
         schedulerR = ReduceLROnPlateau(optimizerR, mode='min', factor=0.2, patience=8, verbose=True)
 
         train_loader = DataLoader(train_dataset, batch_size=opt.batchSize,
