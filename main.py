@@ -28,8 +28,8 @@ loss_fn_alex = lpips.LPIPS(net='alex')
 
 CLEAN = 1
 BACKDOOR = 2
-LR = 0.0001
-LR_for_RNET = 0.000005
+LR = 0.001
+LR_for_RNET = 0.0001
 TITLE = "单独降低了RNET的学习率，可能是RNET收敛太快了"
 
 
