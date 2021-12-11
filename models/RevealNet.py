@@ -48,6 +48,7 @@ class RevealNet(nn.Module):
         # input is (3) x 256 x 256
         self.main = nn.Sequential(
             nn.Conv2d(nc, nhf, 3, 1, 1),
+            nn.Dropout(0.5),
             nn.BatchNorm2d(nhf),
             nn.ReLU(True),
 
@@ -66,10 +67,12 @@ class RevealNet(nn.Module):
             nn.ReLU(True),
 
             nn.Conv2d(nhf * 2, nhf, 3, 1, 1),
+            nn.Dropout(0.5),
             nn.BatchNorm2d(nhf),
             nn.ReLU(True),
 
             nn.Conv2d(nhf, nc, 3, 1, 1),
+            nn.Dropout(0.5),
             output_function()
         )
 
