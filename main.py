@@ -30,7 +30,7 @@ CLEAN = 1
 BACKDOOR = 2
 LR = 0.0001
 LR_for_RNET = 0.00001
-TITLE = "单独降低了RNET的学习率，可能是RNET收敛太快了"
+TITLE = "在最好结果的情况下把验证集加到训练集中"
 
 
 path = pathlib.Path(__file__).parent.resolve()
