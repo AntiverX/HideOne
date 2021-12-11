@@ -52,6 +52,7 @@ class RevealNet(nn.Module):
             nn.ReLU(True),
 
             nn.Conv2d(nhf, nhf * 2, 3, 1, 1),
+            nn.Dropout(0.5),
             nn.BatchNorm2d(nhf*2),
             nn.ReLU(True),
 
@@ -60,6 +61,7 @@ class RevealNet(nn.Module):
             # nn.ReLU(True),
 
             nn.Conv2d(nhf * 2, nhf * 2, 3, 1, 1),
+            nn.Dropout(0.5),
             nn.BatchNorm2d(nhf*2),
             nn.ReLU(True),
 
