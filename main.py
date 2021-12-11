@@ -28,8 +28,8 @@ loss_fn_alex = lpips.LPIPS(net='alex')
 
 CLEAN = 1
 BACKDOOR = 2
-LR = 0.001
-LR_for_RNET = 0.0001
+LR = 0.0001
+LR_for_RNET = 0.00001
 TITLE = "单独降低了RNET的学习率，可能是RNET收敛太快了"
 
 
@@ -231,7 +231,7 @@ def main():
         schedulerR = ReduceLROnPlateau(optimizerR, mode='min', factor=0.2, patience=8, verbose=True)
 
         train_loader = DataLoader(train_dataset, batch_size=opt.batchSize, shuffle=True, num_workers=int(opt.workers))
-        val_loader = DataLoader(val_dataset, batch_size=opt.batchSize, shuffle=True, num_workers=int(opt.workers))
+        val_loader = DataLoader(val_dataset, batch_size=opt.batchSize, shuffle=False, num_workers=int(opt.workers))
         smallestLoss = 10000
         print_log("training is beginning .......................................................", logPath)
         for epoch in range(opt.niter):
