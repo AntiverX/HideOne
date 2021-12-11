@@ -26,8 +26,8 @@ from models.RevealNet import RevealNet
 
 loss_fn_alex = lpips.LPIPS(net='alex')
 
-CLEAN = 1
-BACKDOOR = 2
+CLEAN = 0.3
+BACKDOOR = 0.7
 LR = 0.0001
 LR_for_RNET = 0.00001
 TITLE = "在最好结果的情况下把验证集加到训练集中"
