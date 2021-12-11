@@ -19,5 +19,5 @@ chmod +x gdrive
 
 
 
-# tar -zcvf valset.tar.gz /root/dataset_50000/val
+# tar -zcvf valset.tar.gz 'f606987b3fbe_2021-12-10-04_01_21 '$'\347\273\247\347\273\255\351\231\215\344\275\216\357\274\214\346\225\210\346\236\234\346\233\264\345\245\275'
 # ./gdrive upload valset.tar.gz

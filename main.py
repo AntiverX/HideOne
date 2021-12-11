@@ -313,15 +313,13 @@ def train(train_loader, epoch, Hnet, Rnet, criterion):
         rev_secret_img = Rnet(container_img)  # put concatenated image into R-net and get revealed secret image
         secret_imgv = Variable(secret_img)
         errR = criterion(rev_secret_img, secret_imgv)
-               # + torch.nn.L1Loss().cuda()(rev_secret_img, secret_imgv) * 0.1
-        Rlosses.update(errR.data, this_batch_size)
+        Rlosses.update(errR.data * BACKDOOR, this_batch_size)
 
         # secret image as clean input
         secret_imgv_as_clean_input = copy.deepcopy(secret_imgv)
         clean_recovered_imgv = Rnet(secret_imgv_as_clean_input)
         errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input)
-        # + torch.nn.L1Loss().cuda()(clean_recovered_imgv, secret_imgv_as_clean_input) * 0.1
-        Rlosses.update(errR_clean.data, this_batch_size)
+        Rlosses.update(errR_clean.data * CLEAN, this_batch_size)
 
         # secret_imgv_ = torch.cat((secret_imgv_as_clean_input, secret_imgv), 0)
         # rev_secret_img_ = torch.cat((clean_recovered_imgv, rev_secret_img, ), 0)
@@ -401,19 +399,21 @@ def validation(val_loader, epoch, Hnet, Rnet, criterion):
             concat_imgv = Variable(concat_img)
             cover_imgv = Variable(cover_img)
 
+        # HNET
         container_img = Hnet(concat_imgv)
         errH = criterion(container_img, cover_imgv)
         Hlosses.update(errH.data, this_batch_size)
 
+        # RNET
         rev_secret_img = Rnet(container_img)
-
         with torch.no_grad():
             secret_imgv = Variable(secret_img)
         errR = criterion(rev_secret_img, secret_imgv)  # loss between secret image and revealed secret image
         Rlosses.update(errR.data * BACKDOOR, this_batch_size)
 
         # secret image as clean input
-        secret_imgv_as_clean_input = copy.deepcopy(secret_imgv)
+        with torch.no_grad():
+            secret_imgv_as_clean_input = Variable(secret_img)
         clean_recovered_imgv = Rnet(secret_imgv_as_clean_input)
         errR_clean = criterion(clean_recovered_imgv, secret_imgv_as_clean_input)
         Rlosses.update(errR_clean.data * CLEAN, this_batch_size)
