@@ -230,10 +230,8 @@ def main():
         optimizerR = optim.Adam(Rnet.parameters(), lr=LR_for_RNET, betas=(opt.beta1, 0.999))
         schedulerR = ReduceLROnPlateau(optimizerR, mode='min', factor=0.2, patience=8, verbose=True)
 
-        train_loader = DataLoader(train_dataset, batch_size=opt.batchSize,
-                                  shuffle=True, num_workers=int(opt.workers))
-        val_loader = DataLoader(val_dataset, batch_size=opt.batchSize,
-                                shuffle=False, num_workers=int(opt.workers))
+        train_loader = DataLoader(train_dataset, batch_size=opt.batchSize, shuffle=True, num_workers=int(opt.workers))
+        val_loader = DataLoader(val_dataset, batch_size=opt.batchSize, shuffle=True, num_workers=int(opt.workers))
         smallestLoss = 10000
         print_log("training is beginning .......................................................", logPath)
         for epoch in range(opt.niter):
